@@ -1,0 +1,210 @@
+namespace ImageProcessorApp
+{
+    partial class Form1
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        
+
+        private void InitializeComponent()
+        {
+            this.textBoxSourceBW = new System.Windows.Forms.TextBox();
+            this.btnBrowseSourceBW = new System.Windows.Forms.Button();
+            this.btnConvertBW = new System.Windows.Forms.Button();
+            this.textBoxSourceMove = new System.Windows.Forms.TextBox();
+            this.btnBrowseSourceMove = new System.Windows.Forms.Button();
+            this.textBoxTargetFolder = new System.Windows.Forms.TextBox();
+            this.btnBrowseTargetFolder = new System.Windows.Forms.Button();
+            this.btnMoveImage = new System.Windows.Forms.Button();
+            this.textBoxLog = new System.Windows.Forms.TextBox();
+            this.btnClearLog = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // textBoxSourceBW
+            // 
+            this.textBoxSourceBW.Location = new System.Drawing.Point(20, 40);
+            this.textBoxSourceBW.Name = "textBoxSourceBW";
+            this.textBoxSourceBW.Size = new System.Drawing.Size(300, 20);
+            this.textBoxSourceBW.TabIndex = 0;
+            // 
+            // btnBrowseSourceBW
+            // 
+            this.btnBrowseSourceBW.Location = new System.Drawing.Point(330, 38);
+            this.btnBrowseSourceBW.Name = "btnBrowseSourceBW";
+            this.btnBrowseSourceBW.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseSourceBW.TabIndex = 1;
+            this.btnBrowseSourceBW.Text = "Обзор";
+            this.btnBrowseSourceBW.UseVisualStyleBackColor = true;
+            this.btnBrowseSourceBW.Click += new System.EventHandler(this.btnBrowseSourceBW_Click);
+            // 
+            // btnConvertBW
+            // 
+            this.btnConvertBW.Location = new System.Drawing.Point(20, 70);
+            this.btnConvertBW.Name = "btnConvertBW";
+            this.btnConvertBW.Size = new System.Drawing.Size(385, 30);
+            this.btnConvertBW.TabIndex = 2;
+            this.btnConvertBW.Text = "Конвертировать в черно-белое";
+            this.btnConvertBW.UseVisualStyleBackColor = true;
+            this.btnConvertBW.Click += new System.EventHandler(this.btnConvertBW_Click);
+            // 
+            // textBoxSourceMove
+            // 
+            this.textBoxSourceMove.Location = new System.Drawing.Point(20, 130);
+            this.textBoxSourceMove.Name = "textBoxSourceMove";
+            this.textBoxSourceMove.Size = new System.Drawing.Size(300, 20);
+            this.textBoxSourceMove.TabIndex = 3;
+            // 
+            // btnBrowseSourceMove
+            // 
+            this.btnBrowseSourceMove.Location = new System.Drawing.Point(330, 128);
+            this.btnBrowseSourceMove.Name = "btnBrowseSourceMove";
+            this.btnBrowseSourceMove.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseSourceMove.TabIndex = 4;
+            this.btnBrowseSourceMove.Text = "Обзор";
+            this.btnBrowseSourceMove.UseVisualStyleBackColor = true;
+            this.btnBrowseSourceMove.Click += new System.EventHandler(this.btnBrowseSourceMove_Click);
+            // 
+            // textBoxTargetFolder
+            // 
+            this.textBoxTargetFolder.Location = new System.Drawing.Point(20, 180);
+            this.textBoxTargetFolder.Name = "textBoxTargetFolder";
+            this.textBoxTargetFolder.Size = new System.Drawing.Size(300, 20);
+            this.textBoxTargetFolder.TabIndex = 5;
+            // 
+            // btnBrowseTargetFolder
+            // 
+            this.btnBrowseTargetFolder.Location = new System.Drawing.Point(330, 178);
+            this.btnBrowseTargetFolder.Name = "btnBrowseTargetFolder";
+            this.btnBrowseTargetFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseTargetFolder.TabIndex = 6;
+            this.btnBrowseTargetFolder.Text = "Обзор";
+            this.btnBrowseTargetFolder.UseVisualStyleBackColor = true;
+            this.btnBrowseTargetFolder.Click += new System.EventHandler(this.btnBrowseTargetFolder_Click);
+            // 
+            // btnMoveImage
+            // 
+            this.btnMoveImage.Location = new System.Drawing.Point(20, 210);
+            this.btnMoveImage.Name = "btnMoveImage";
+            this.btnMoveImage.Size = new System.Drawing.Size(385, 30);
+            this.btnMoveImage.TabIndex = 7;
+            this.btnMoveImage.Text = "Переместить изображение";
+            this.btnMoveImage.UseVisualStyleBackColor = true;
+            this.btnMoveImage.Click += new System.EventHandler(this.btnMoveImage_Click);
+            // 
+            // textBoxLog
+            // 
+            this.textBoxLog.Location = new System.Drawing.Point(20, 270);
+            this.textBoxLog.Multiline = true;
+            this.textBoxLog.Name = "textBoxLog";
+            this.textBoxLog.ReadOnly = true;
+            this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxLog.Size = new System.Drawing.Size(385, 150);
+            this.textBoxLog.TabIndex = 8;
+            // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Location = new System.Drawing.Point(330, 430);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(75, 23);
+            this.btnClearLog.TabIndex = 9;
+            this.btnClearLog.Text = "Очистить";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(17, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(181, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Конвертация в черно-белое:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(17, 110);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(149, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Перемещение изображения:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 160);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Целевая папка:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(17, 250);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Лог:";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(434, 461);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnClearLog);
+            this.Controls.Add(this.textBoxLog);
+            this.Controls.Add(this.btnMoveImage);
+            this.Controls.Add(this.btnBrowseTargetFolder);
+            this.Controls.Add(this.textBoxTargetFolder);
+            this.Controls.Add(this.btnBrowseSourceMove);
+            this.Controls.Add(this.textBoxSourceMove);
+            this.Controls.Add(this.btnConvertBW);
+            this.Controls.Add(this.btnBrowseSourceBW);
+            this.Controls.Add(this.textBoxSourceBW);
+            this.Name = "Form1";
+            this.Text = "Обработчик изображений";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        
+
+        private System.Windows.Forms.TextBox textBoxSourceBW;
+        private System.Windows.Forms.Button btnBrowseSourceBW;
+        private System.Windows.Forms.Button btnConvertBW;
+        private System.Windows.Forms.TextBox textBoxSourceMove;
+        private System.Windows.Forms.Button btnBrowseSourceMove;
+        private System.Windows.Forms.TextBox textBoxTargetFolder;
+        private System.Windows.Forms.Button btnBrowseTargetFolder;
+        private System.Windows.Forms.Button btnMoveImage;
+        private System.Windows.Forms.TextBox textBoxLog;
+        private System.Windows.Forms.Button btnClearLog;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+    }
+}

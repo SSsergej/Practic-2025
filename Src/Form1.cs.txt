@@ -1,0 +1,282 @@
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Forms;
+
+namespace ImageProcessorApp
+{
+    public partial class Form1 : Form
+    {
+        // Конструктор формы
+        public Form1()
+        {
+            InitializeComponent(); // Этот метод создает все элементы управления
+        }
+
+        // Метод вызывается при загрузке формы
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Text = "Обработчик изображений"; // Устанавливаем заголовок окна
+            AddToLog("Программа запущена. Выберите действие."); // Добавляем сообщение в лог
+        }
+
+        // Метод для добавления текста в лог
+        private void AddToLog(string message)
+        {
+            textBoxLog.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - " + message + Environment.NewLine);
+        }
+
+        // Кнопка "Обзор" для исходного файла (черно-белое)
+        private void btnBrowseSourceBW_Click(object sender, EventArgs e)
+        {
+            // Создаем диалог выбора файла
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Изображения (*.jpg; *.jpeg; *.png; *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
+            openFileDialog.Title = "Выберите изображение";
+
+            // Если пользователь выбрал файл
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxSourceBW.Text = openFileDialog.FileName;
+                AddToLog("Выбран файл: " + openFileDialog.FileName);
+            }
+        }
+
+        // Кнопка "Конвертировать в черно-белое"
+        private void btnConvertBW_Click(object sender, EventArgs e)
+        {
+            // Получаем путь к файлу из текстового поля
+            string sourcePath = textBoxSourceBW.Text.Trim();
+
+            // Проверяем, что путь не пустой
+            if (string.IsNullOrEmpty(sourcePath))
+            {
+                MessageBox.Show("Введите путь к файлу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Проверяем, что файл существует
+            if (!File.Exists(sourcePath))
+            {
+                MessageBox.Show("Файл не существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Проверяем расширение файла
+            string extension = Path.GetExtension(sourcePath).ToLower();
+            if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
+            {
+                MessageBox.Show("Неподдерживаемый формат файла!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                AddToLog("Начало конвертации в черно-белое...");
+
+                // Создаем путь для нового файла
+                string directory = Path.GetDirectoryName(sourcePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(sourcePath);
+                string newFilePath = Path.Combine(directory, fileNameWithoutExtension + "_bw" + extension);
+
+                // Проверяем, не существует ли уже файл
+                if (File.Exists(newFilePath))
+                {
+                    DialogResult result = MessageBox.Show("Файл уже существует. Перезаписать?", "Внимание",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.No)
+                    {
+                        AddToLog("Конвертация отменена.");
+                        return;
+                    }
+                }
+
+                // Загружаем изображение
+                using (Bitmap originalImage = new Bitmap(sourcePath))
+                {
+                    // Создаем черно-белое изображение
+                    using (Bitmap bwImage = new Bitmap(originalImage.Width, originalImage.Height))
+                    {
+                        // Проходим по всем пикселям изображения
+                        for (int x = 0; x < originalImage.Width; x++)
+                        {
+                            for (int y = 0; y < originalImage.Height; y++)
+                            {
+                                // Получаем цвет исходного пикселя
+                                Color originalColor = originalImage.GetPixel(x, y);
+
+                                // Вычисляем яркость
+                                int brightness = (int)(originalColor.R * 0.3 + originalColor.G * 0.59 + originalColor.B * 0.11);
+
+                                // Создаем черно-белый цвет
+                                Color bwColor = Color.FromArgb(brightness, brightness, brightness);
+
+                                // Устанавливаем пиксель в новом изображении
+                                bwImage.SetPixel(x, y, bwColor);
+                            }
+                        }
+
+                        // Сохраняем результат
+                        if (extension == ".jpg" || extension == ".jpeg")
+                        {
+                            bwImage.Save(newFilePath, ImageFormat.Jpeg);
+                        }
+                        else if (extension == ".png")
+                        {
+                            bwImage.Save(newFilePath, ImageFormat.Png);
+                        }
+                        else if (extension == ".bmp")
+                        {
+                            bwImage.Save(newFilePath, ImageFormat.Bmp);
+                        }
+                    }
+                }
+
+                AddToLog("Конвертация завершена успешно!");
+                AddToLog("Создан файл: " + newFilePath);
+                MessageBox.Show("Конвертация завершена успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                AddToLog("Ошибка при конвертации: " + ex.Message);
+                MessageBox.Show("Ошибка: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Кнопка "Обзор" для исходного файла (перемещение)
+        private void btnBrowseSourceMove_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Изображения (*.jpg; *.jpeg; *.png; *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
+            openFileDialog.Title = "Выберите изображение для перемещения";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxSourceMove.Text = openFileDialog.FileName;
+                AddToLog("Выбран файл для перемещения: " + openFileDialog.FileName);
+            }
+        }
+
+        // Кнопка "Обзор" для целевой папки
+        private void btnBrowseTargetFolder_Click(object sender, EventArgs e)
+        {
+            // Создаем диалог выбора папки
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.Description = "Выберите папку для перемещения";
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxTargetFolder.Text = folderDialog.SelectedPath;
+                AddToLog("Выбрана целевая папка: " + folderDialog.SelectedPath);
+            }
+        }
+
+        // Кнопка "Переместить изображение"
+        private void btnMoveImage_Click(object sender, EventArgs e)
+        {
+            // Получаем пути из текстовых полей
+            string sourcePath = textBoxSourceMove.Text.Trim();
+            string targetFolder = textBoxTargetFolder.Text.Trim();
+
+            // Проверяем исходный файл
+            if (string.IsNullOrEmpty(sourcePath))
+            {
+                MessageBox.Show("Введите путь к исходному файлу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!File.Exists(sourcePath))
+            {
+                MessageBox.Show("Исходный файл не существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Проверяем расширение файла
+            string extension = Path.GetExtension(sourcePath).ToLower();
+            if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
+            {
+                MessageBox.Show("Неподдерживаемый формат файла!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Проверяем целевую папку
+            if (string.IsNullOrEmpty(targetFolder))
+            {
+                MessageBox.Show("Введите путь к целевой папке!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                AddToLog("Начало перемещения файла...");
+
+                // Если папка не существует - предлагаем создать
+                if (!Directory.Exists(targetFolder))
+                {
+                    DialogResult result = MessageBox.Show("Папка не существует. Создать?", "Внимание",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Directory.CreateDirectory(targetFolder);
+                        AddToLog("Создана папка: " + targetFolder);
+                    }
+                    else
+                    {
+                        AddToLog("Перемещение отменено.");
+                        return;
+                    }
+                }
+
+                // Создаем полный путь для перемещения
+                string fileName = Path.GetFileName(sourcePath);
+                string destinationPath = Path.Combine(targetFolder, fileName);
+
+                // Проверяем, не существует ли уже файл в целевой папке
+                if (File.Exists(destinationPath))
+                {
+                    DialogResult result = MessageBox.Show("Файл уже существует в целевой папке. Перезаписать?",
+                        "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Удаляем существующий файл
+                        File.Delete(destinationPath);
+                        AddToLog("Удален существующий файл: " + destinationPath);
+                    }
+                    else
+                    {
+                        AddToLog("Перемещение отменено.");
+                        return;
+                    }
+                }
+
+                // Перемещаем файл
+                File.Move(sourcePath, destinationPath);
+
+                AddToLog("Перемещение завершено успешно!");
+                AddToLog("Файл перемещен в: " + destinationPath);
+                MessageBox.Show("Файл перемещен успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Очищаем поля после успешного перемещения
+                textBoxSourceMove.Clear();
+                textBoxTargetFolder.Clear();
+
+            }
+            catch (Exception ex)
+            {
+                AddToLog("Ошибка при перемещении: " + ex.Message);
+                MessageBox.Show("Ошибка: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Кнопка "Очистить лог"
+        private void btnClearLog_Click(object sender, EventArgs e)
+        {
+            textBoxLog.Clear();
+            AddToLog("Лог очищен.");
+        }
+    }
+}
